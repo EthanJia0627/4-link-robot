@@ -1,0 +1,14 @@
+<mujoco model = 4linkrobot>
+    <compiler angle="radian" meshdir="assets" texturedir="assets" autolimits="true"/>
+
+    <option cone="elliptic" impratio="100"/>
+
+    <default>
+        <default class = "4linkrobot">
+            <geom friction="0.6" margin="0.001"/>
+            <joint axis="0 1 0" damping="2" armature="0.01" frictionloss="0.2"/>
+            <position kp="100" forcerange="-33.5 33.5"/>
+        </default>      
+    </default>
+
+</mujoco>

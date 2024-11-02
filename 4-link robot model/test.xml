@@ -1,0 +1,69 @@
+<mujoco model="4-link-robot">
+    <compiler angle="radian" meshdir="assets" texturedir="assets" autolimits="true"/>
+    <option cone="elliptic" impratio="100"/>
+    <default>
+        <default class = "4linkrobot">
+            <geom friction="0.6" margin="0.001" material = "link"/>
+        </default>      
+    </default>
+
+    <asset>
+        <texture type="2d" name="groundplane" builtin="checker" mark="edge" width="512" height="512" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3" markrgb="0.8 0.8 0.8"/>
+        <material name="groundplane" texture="groundplane" texrepeat="1000 1000" reflectance="0.2"/>
+        <material name="link" rgba="0.4 0.4 0.4 1"/>
+    </asset>
+
+    <visual>
+        <headlight diffuse="1 1 1" ambient="0.3 0.3 0.3" specular="0 0 0"/>
+        <rgba haze="0.15 0.25 0.35 1"/>
+        <global azimuth="120" elevation="-20"/>
+    </visual>
+
+    <worldbody>
+        <light name="spotlight" mode="targetbodycom" target="robot" pos="0 -1 2"/>
+    
+        <geom name="floor" type="plane" material="groundplane" size="1000 1000 0.1"/>
+
+        <body name="robot" pos="0 0 0" childclass = "4linkrobot">
+            <freejoint/>
+            <body name = "foot1">
+
+                <geom name = "m5_1" type="box" size="0.8 0.2 0.1" pos = "0.7 0.4 0.1" mass = "0.5"/>
+                <geom name = "m5_2" type="box" size="0.8 0.2 0.1" pos = "0.7 -0.4 0.1" mass = "0.5"/>
+                <geom name = "m1" type="box" size="0.1 0.1 0.575" pos = "0 0 0.6" mass = "1"/>
+
+                <body name="leg1" pos="0 0 1.2">
+                    <joint name="joint1" type="hinge" axis="0 1 0" range="-3 3"/>
+                    <geom name = "m7" type="sphere" size = "0.15 0.15 0.15" pos = "0 0 0" mass = "1" contype = "0" conaffinity = "0" rgba = "0.4 0.4 0.4 0.5" />
+                    <geom name="m2" type="box" size="0.1 0.1 0.7" pos = "0 0 0.7" mass = "1"/>
+                    <geom name = "m8" type="sphere" size = "0.15 0.15 0.15" pos = "0 0 1.4" mass = "1" contype = "0" conaffinity = "0" rgba = "0.4 0.4 0.4 0.5" />
+
+                    <body name="leg2" pos="0 0 1.4">
+                        <joint name="joint2" type="hinge" axis="0 1 0" range="-3 3"/>
+                        <geom name="m3" type="box" size="0.1 0.1 0.7" pos = "0 0 0.7" mass = "1"/>
+                        <geom name = "m9" type="sphere" size = "0.15 0.15 0.15" pos = "0 0 1.4" mass = "1" contype = "0" conaffinity = "0" rgba = "0.4 0.4 0.4 0.5" /> 
+                        <body name="foot2" pos="0 0 1.4">
+                            <joint name="joint3" type="hinge" axis="0 1 0" range="-3 3"/>
+                            <geom name = "m4" type="box" size="0.1 0.1 0.575" pos = "0 0 0.6" mass = "1"/>
+                            <geom name = "m6_1" type="box" size="0.8 0.2 0.1" pos = "0.7 0.81 1.1" mass = "0.5"/>
+                            <geom name = "m6_2" type="box" size="0.8 0.2 0.1" pos = "0.7 -0.81 1.1" mass = "0.5"/>
+                            
+                        </body>  
+                    </body>
+                </body>
+            </body>
+        </body>
+    </worldbody>
+
+  <actuator>
+    <position name="joint1_act" joint="joint1" ctrlrange="-3.14 3.14" kp="500" kv = "50"/>
+    <position name="joint2_act" joint="joint2" ctrlrange="-3.14 3.14" kp="500" kv = "50"/>
+    <position name="joint3_act" joint="joint3" ctrlrange="-3.14 3.14" kp="500" kv = "50"/>
+  </actuator>
+
+  <keyframe>
+    <key name="home" qpos="0 0 1.39186 0.828929 0 0.559354 0 0.287885 0.173135 0.356612" 
+    qvel="-3.41396e-06 0 3.3898e-06 0 6.03853e-06 0 -3.99941e-06 -4.35491e-06 -4.10311e-06" 
+    ctrl="0.2512 0.157 0.314"/>
+  </keyframe>
+</mujoco>
