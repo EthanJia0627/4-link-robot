@@ -97,11 +97,12 @@ class DQN_Trainner():
         self.next_state = None
         self.reward = 0
         
-    def step(self,state):
-        self.next_state = state
-        if self.state != None:
-            self.replay_buffer.push(self.state, self.action, self.reward, self.next_state,False) 
-            self.train_model_from_replay()
+    def step(self,state,train = True):
+        if train:
+            self.next_state = state
+            if self.state != None:
+                self.replay_buffer.push(self.state, self.action, self.reward, self.next_state,False) 
+                self.train_model_from_replay()
         if random.random() < self.epsilon:
             action = int(self.output_size*np.random.rand())
         else:
